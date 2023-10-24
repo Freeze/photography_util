@@ -12,7 +12,7 @@ JSON_FILE_PATH = "/var/www/hldnio/portfolio/photos.json"
 MAX_SIZE = 10 * 1024 * 1024  # 10 MB
 COPYRIGHT = "holden@mnowls.com"
 
-def generate_thumbnail(image_path, thumbnail_path, dimensions):
+def generate_thumbnail(image_path, thumbnail_path, dimensions, args):
     """ Create thumbnail files for use on webpage """
     with Image.open(image_path) as img:
         img.thumbnail(dimensions)
@@ -20,7 +20,7 @@ def generate_thumbnail(image_path, thumbnail_path, dimensions):
             img.info["Copyright"] = COPYRIGHT
         img.save(thumbnail_path)
 
-def resize_large_image(image_path):
+def resize_large_image(image_path, args):
     """ Resize large images to a more manageable size"""
     with Image.open(image_path) as img:
         if os.path.getsize(image_path) > MAX_SIZE:
@@ -33,13 +33,11 @@ def resize_large_image(image_path):
 
 def main():
     """ The actual script logic """
-    global args
     parser = argparse.ArgumentParser(description='Manage photos and thumbnails.')
     parser.add_argument('-d', '--dimensions', type=str, required=True, help='Thumbnail dimensions in format WIDTHxHEIGHT.')
     parser.add_argument('-f', '--force', action='store_true', help='Force regeneration of thumbnails.')
     parser.add_argument('-s', '--shrink', action='store_true', help='Shrink source images larger than 10MB.')
     parser.add_argument('-m', '--metadata', action='store_true', help='Add copyright metadata.')
-
     args = parser.parse_args()
     dimensions = tuple(map(int, args.dimensions.lower().split('x')))
 
@@ -64,14 +62,14 @@ def main():
 
                 if args.force or not os.path.exists(thumbnail_path):
                     try:
-                        generate_thumbnail(image_path, thumbnail_path, dimensions)
+                        generate_thumbnail(image_path, thumbnail_path, dimensions, args)
                     except Exception as e:
                         print(f"Skipping {image_path} due to error: {e}")
                         continue
 
                 if args.shrink:
                     try:
-                        resize_large_image(image_path)
+                        resize_large_image(image_path, args)
                     except Exception as e:
                         print(f"Skipping {image_path} due to error: {e}")
                         continue
