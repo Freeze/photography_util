@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-from PIL import Image, PngImagePlugin
 import os
 import json
 import argparse
+from PIL import Image
 
 # Global Variables
 PHOTOS_DIR = "/var/www/hldnio/portfolio/photos"
@@ -13,6 +13,7 @@ MAX_SIZE = 10 * 1024 * 1024  # 10 MB
 COPYRIGHT = "holden@mnowls.com"
 
 def generate_thumbnail(image_path, thumbnail_path, dimensions):
+    """ Create thumbnail files for use on webpage """
     with Image.open(image_path) as img:
         img.thumbnail(dimensions)
         if args.metadata:
@@ -20,6 +21,7 @@ def generate_thumbnail(image_path, thumbnail_path, dimensions):
         img.save(thumbnail_path)
 
 def resize_large_image(image_path):
+    """ Resize large images to a more manageable size"""
     with Image.open(image_path) as img:
         if os.path.getsize(image_path) > MAX_SIZE:
             factor = (MAX_SIZE / os.path.getsize(image_path)) ** 0.5
@@ -30,6 +32,7 @@ def resize_large_image(image_path):
             img.save(image_path)
 
 def main():
+    """ The actual script logic """
     global args
     parser = argparse.ArgumentParser(description='Manage photos and thumbnails.')
     parser.add_argument('-d', '--dimensions', type=str, required=True, help='Thumbnail dimensions in format WIDTHxHEIGHT.')
