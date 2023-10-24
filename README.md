@@ -44,24 +44,24 @@ A collection of Python scripts developed to assist in managing a photography por
 
 Clone this repository to your local machine and navigate to the directory containing the scripts.
 
-\`\`\`bash
+```bash
 git clone <repository_url>
 cd <repository_directory>
-\`\`\`
+```
 
 Make sure to install any dependencies that are required for these scripts.
 
-\`\`\`bash
+```bash
 pip install -r requirements.txt
-\`\`\`
+```
 
 ## Usage
 
 Each script can be run from the command line and includes its own set of flags for customization.
 
-\`\`\`bash
+```bash
 python3 <script_name>.py [options]
-\`\`\`
+```
 
 For detailed usage instructions for each script, see the individual script files.
 
@@ -77,3 +77,4 @@ This project is licensed under the MIT License.
 
 - [ ] Package all scripts to make them more portable and manageable.
 - [ ] Not abandon this like everything else I put on GitHub!
+- [ ] Document any caveats with package versions - not everything always works perfect on every machine.
