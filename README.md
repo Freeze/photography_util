@@ -45,8 +45,8 @@ A collection of Python scripts developed to assist in managing a photography por
 Clone this repository to your local machine and navigate to the directory containing the scripts.
 
 ```bash
-git clone <repository_url>
-cd <repository_directory>
+git clone git@github.com:Freeze/photography_util.git>
+cd photography_util>
 ```
 
 Make sure to install any dependencies that are required for these scripts.
