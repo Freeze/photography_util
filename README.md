@@ -40,6 +40,11 @@ A collection of Python scripts developed to assist in managing a photography por
 - **Purpose**: Takes a directory of files and sorts them into subdirectories based on their dates.
 - **Note**: This script is particularly useful if you find yourself with a messy directory structure, such as after a sync gone wrong.
 
+### rename_dirs.py
+
+- **Purpose**: Rename directories from `YYYY-MM-DD` to `YYYY-MM-DD - <LOCATION> - <DESCR>`.
+- **Note**: I take a lot of pictures and sometimes I forget what's what. This parses all subdirs in a dir and prompts you to rename them one by one.
+
 ## Installation
 
 Clone this repository to your local machine and navigate to the directory containing the scripts.

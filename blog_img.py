@@ -6,7 +6,7 @@ from PIL import Image
 import piexif
 
 # Global variables
-OUTPUT_DIR = '/Users/holden/dev/blog/content/images/'
+OUTPUT_DIR = '/Users/holden/dev/blog/content/nov_2023/images/'
 
 def resize_image(input_path, output_path, width=1024):
     """
