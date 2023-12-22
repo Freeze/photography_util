@@ -1,45 +1,41 @@
-#!/usr/bin/env python
-from pathlib import Path
+#!/usr/bin/env python3
 import os
 import sys
+from pathlib import Path
 import exifread
 
 def check_all_files(directory):
-    ''' Loop that finds all files in directory
-        and executes the function to organize
-        against each file
+    ''' 
+    Loop through all files in the directory and organize them.
     '''
-    for filename in os.scandir(directory):
-        try:
-            get_date_from_arw(filename, directory)
-        except KeyError:
-            sys.exit(1)
-        except KeyboardInterrupt:
-            sys.exit(1)
+    for entry in os.scandir(directory):
+        if entry.is_file() and not entry.name.startswith('.'):
+            try:
+                get_date_from_arw(entry, directory)
+            except KeyError:
+                continue
+            except KeyboardInterrupt:
+                sys.exit(1)
 
-def get_date_from_arw(filename, directory):
-    ''' Function that handles parsing each raw file
-        Try/Fail will catch anything that's not a raw file
-        Get date from RAW file EXIF, check if directory for date exists
-        If directory does not exist, create it
-        Move file once directory exists
+def get_date_from_arw(file_entry, directory):
+    ''' 
+    Parse each raw file and organize based on EXIF date.
     '''
     try:
-        f = open(filename, 'rb')
-        filename = filename.name
-        tags = exifread.process_file(f)
-        date = str(tags['EXIF DateTimeOriginal'])
-        date = date.split(' ', maxsplit=1)[0].replace(':', '-')
-        if os.path.exists(date):
-            Path(f"{directory}/{filename}").rename(f"{directory}/{date}/{filename}")
-        else:
-            os.makedirs(date)
-            Path(f"{directory}/{filename}").rename(f"{directory}/{date}/{filename}")
-        f.close()
-    except KeyError: 
+        with open(file_entry.path, 'rb') as file:
+            tags = exifread.process_file(file)
+            date = str(tags['EXIF DateTimeOriginal']).split(' ', 1)[0].replace(':', '-')
+            target_dir = os.path.join(directory, date)
+
+            if not os.path.exists(target_dir):
+                os.makedirs(target_dir)
+
+            new_path = os.path.join(target_dir, file_entry.name)
+            os.rename(file_entry.path, new_path)
+    except KeyError:
         pass
 
-
 if __name__ == "__main__":
-    PHOTO_DIR = "/path/to/directory/full-of-photos/"
-    check_all_files(PHOTO_DIR)
+    current_directory = os.getcwd()
+    check_all_files(current_directory)
+
