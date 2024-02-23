@@ -45,6 +45,11 @@ A collection of Python scripts developed to assist in managing a photography por
 - **Purpose**: Rename directories from `YYYY-MM-DD` to `YYYY-MM-DD - <LOCATION> - <DESCR>`.
 - **Note**: I take a lot of pictures and sometimes I forget what's what. This parses all subdirs in a dir and prompts you to rename them one by one.
 
+### experimental_rename.py
+
+- **Purpose**: Rename directories from `YYYY-MM-DD` to `YYYY-MM-DD - <LOCATION> - <DESCR>`.
+- **Note**: This is similar to the script above it, but also will now handle directories that already exist and duplicate files. I only accidentally deleted a bunch of stuff once making this.
+
 ## Installation
 
 Clone this repository to your local machine and navigate to the directory containing the scripts.
